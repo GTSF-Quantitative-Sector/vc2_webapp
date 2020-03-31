@@ -1,0 +1,67 @@
+{% extends "layout.html" %}
+{% block content %}
+<div id="content">
+  <div class="jumbotron jumbotron-fluid"  id="particles-js">
+    <div class="container">
+      
+      <h1 class="display-4">Value Composite Score</h1>
+
+      <p class="lead">Calculate the relative valuation score of companies with one click</p>
+    </div>
+  </div>
+
+  <div class="row" >
+    <!-- Insert other columns here-->
+    <div class="col-md-6">
+      <div class="card">
+        <h5 class="card-header">Calculate VC2 Score</h5>
+        <div class="card-body">
+          <h5 class="card-title">Calculate VC2 Score on Custom List</h5>
+          <p class="card-text">Upload a CSV file of tickers and calculate the VC2 score of each company</p>
+          <a href="/test" class="btn btn-success">Upload CSV</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card">
+        <h5 class="card-header">Info</h5>
+        <div class="card-body">
+          <h5 class="card-title">How does the VC2 Score Work?</h5>
+          <p class="card-text">With two rounds of rankings using six widely known value ratios, the VC2 Score serves as a preliminary ranking</p>
+          <a href="#" class="btn btn-warning">Learn more</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div id="loading">
+
+</div>
+
+<style>
+  div#content {
+    display: none;
+    }
+
+  div#loading {
+    top: 200 px;
+    margin: auto;
+    position: absolute;
+    z-index: 1000;
+    width: 160px;
+    height: 24px;
+    background: "static/ajax-loader.gif" no-repeat;
+    cursor: wait;
+    }
+</style>
+<script type="text/javascript">
+  function preloader(){
+      document.getElementById("loading").style.display = "none";
+      document.getElementById("content").style.display = "block";
+  }//preloader
+  window.onload = preloader;
+</script>
+{% endblock content %}

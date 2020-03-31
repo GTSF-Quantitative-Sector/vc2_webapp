@@ -1,0 +1,278 @@
+{% extends "layout.html" %}
+{% block content %}
+<div id="page">
+    <style>
+    * {
+      box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+    }
+    
+    
+    .wrapper_preload {
+      margin: auto;
+      max-width: 800px;
+      padding-top: 60px;
+      text-align: center;
+    }
+    
+ 
+    
+    h1 {
+      color: #130f40;
+      font-family: 'Varela Round', sans-serif;
+      letter-spacing: -.5px;
+      font-weight: 700;
+      padding-bottom: 10px;
+    }
+    
+    .upload-container {
+      background-color: rgb(239, 239, 239);
+      border-radius: 6px;
+      padding: 10px;
+    }
+    
+    .border-container {
+      border: 5px dashed rgba(198, 198, 198, 0.65);
+      border-radius: 6px;
+      padding: 20px;
+    }
+    
+    .border-container p {
+      color: #130f40;
+      font-weight: 600;
+      font-size: 1.1em;
+      letter-spacing: -1px;
+      margin-top: 30px;
+      margin-bottom: 0;
+      opacity: 0.65;
+    }
+    
+    #file-browser {
+      text-decoration: none;
+      color: rgb(22,42,255);
+      border-bottom: 3px dotted rgba(22, 22, 255, 0.85);
+    }
+    
+    #file-browser:hover {
+      color: rgb(0, 0, 255);
+      border-bottom: 3px dotted rgba(0, 0, 255, 0.85);
+    }
+    
+    .icons {
+      color: #95afc0;
+      opacity: 0.55;
+    }
+    </style>
+    <script>
+      window.console = window.console || function(t) {};
+    </script>
+    <script>
+      if (document.location.search.match(/type=embed/gi)) {
+        window.parent.postMessage("resize", "*");
+      }
+    </script>
+    <body translate="no">
+    <div class="wrapper_preload">
+    <div class="container">
+        <div class="alert alert-primary" role="alert">
+            <h4 class = "alert-heading">Please upload a .csv file</h4>
+          </div>
+    <div class="upload-container">
+    <div class="border-container">
+    
+    <div id="upload-box">
+    <div class="icons fa-4x">
+    <i class="fas fa-file-alt"></i>
+    </div>
+    
+    
+    <p>Please upload a CSV with stock tickers in the first column</p>
+    <br>
+    <form action="/upload"  method="post" enctype="multipart/form-data">
+        <input type="file" name="data_file" />
+        <button type="submit" class="btn btn-success" onclick='loadDoc()'>Submit </button>
+    </form>
+    
+    </div>
+
+    <div id="animation" style="display: none;">
+      <div class="psoload">
+        <div class="straight"></div>
+        <div class="curve"></div>
+        <div class="center"></div>
+        <div class="inner"></div>
+      </div>
+      <br>
+      <div class="alert alert-success" role="alert">
+        Fetching Data and Calculating... Might take a Minute
+      </div>
+    
+        <style>
+        
+
+@keyframes arrow-spin {
+  100% {
+    transform: rotate(179deg);
+  }
+}
+
+@-webkit-keyframes arrow-spin {
+  100% {
+    -webkit-transform: rotate(179deg);
+  }
+}
+
+.psoload,
+.psoload *,
+.psoload *:before,
+.psoload *:after {
+  box-sizing: border-box;
+  transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+  text-align: left;
+}
+
+
+
+.psoload {
+  position: relative;
+  margin: 30px auto;
+  height: 150px;
+  width: 150px;
+}
+
+.psoload .straight,
+.psoload .curve {
+  position: absolute;
+  top: 17.5%;
+  left: 17.5%;
+  width: 65%;
+  height: 65%;
+  border-radius: 100%;
+  animation: arrow-spin 0.85s cubic-bezier(0.2, 0.8, 0.9, 0.1) infinite;
+  -webkit-animation: arrow-spin 0.85s cubic-bezier(0.2, 0.8, 0.9, 0.1) infinite;
+}
+
+.psoload .straight:before,
+.psoload .straight:after {
+  content: '';
+  position: absolute;
+  width: 15%;
+  border-bottom: 3px solid #32a84a;
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+}
+
+.psoload .straight:before {
+  top: 5px;
+  left: 5px;
+}
+
+.psoload .straight:after {
+  bottom: 5px;
+  right: 5px;
+}
+
+.psoload .curve:before,
+.psoload .curve:after {
+  content: '';
+  position: absolute;
+  width: 45px;
+  height: 10px;
+  border: solid 3px transparent;
+  border-top-color: #32a84a;
+  border-radius: 50%/10px 10px 0 0;
+  z-index: 90001;
+}
+
+.psoload .curve:before {
+  transform: rotate(-63deg) translateX(-27px) translateY(-4px);
+  -webkit-transform: rotate(-63deg) translateX(-27px) translateY(-4px);
+}
+
+.psoload .curve:after {
+  bottom: 5px;
+  right: 5px;
+  transform: rotate(115deg) translateX(-26px) translateY(-12px);
+  -webkit-transform: rotate(115deg) translateX(-26px) translateY(-12px);
+}
+
+.psoload .center {
+  position: absolute;
+  top: 20%;
+  left: 20%;
+  width: 60%;
+  height: 60%;
+  border-radius: 100%;
+  border: 3px solid #32a84a;
+}
+
+.psoload .inner {
+  position: absolute;
+  top: 25%;
+  left: 25%;
+  width: 50%;
+  height: 50%;
+  border-radius: 100%;
+  animation: arrow-spin 0.85s cubic-bezier(0.2, 0.8, 0.9, 0.1) infinite reverse;
+  -webkit-animation: arrow-spin 0.85s cubic-bezier(0.2, 0.8, 0.9, 0.1) infinite reverse;
+}
+
+.psoload .inner:before,
+.psoload .inner:after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+  border: 6px solid transparent;
+  border-bottom-width: 11px;
+  border-bottom-color: #32a84a;
+}
+
+.psoload .inner:before {
+  top: 12px;
+  left: 12px;
+  transform: rotate(128deg);
+  -webkit-transform: rotate(128deg);
+}
+
+.psoload .inner:after {
+  bottom: 12px;
+  right: 12px;
+  transform: rotate(-48deg);
+  -webkit-transform: rotate(-48deg);
+}
+        </style>
+    </div>
+    </div>
+    </div>
+    <br>
+    
+    </div>
+    <script src="https://static.codepen.io/assets/common/stopExecutionOnTimeout-157cd5b220a5c80d4ff8e0e70ac069bffd87a61252088146915e8726e5d9f147.js"></script>
+    <script src='https://use.fontawesome.com/releases/v5.0.10/js/all.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+  </div>
+
+  
+
+  <script>
+    function loadDoc() {
+      document.getElementById("upload-box").style.display = "none";
+      document.getElementById("animation").style.display = "block";
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          document.getElementById("page").innerHTML =
+          this.responseText;
+          document.getElementById("animation").style.display = "none";
+          document.getElementById("page").style.display = "block";
+        }
+      };
+      xhttp.open("GET", "/upload", true);
+      xhttp.send();
+    }
+    </script>
+{% endblock content %}
+

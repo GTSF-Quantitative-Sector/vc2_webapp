@@ -1,0 +1,90 @@
+{% extends "layout.html" %}
+{% block content %}
+
+
+  <table id ="dtHorizontalVerticalExample">
+            <!-- Insert other columns here-->           
+            {{ data.to_html(classes="table table-dark") | safe}}  
+          </table>
+   
+
+        <!-- Button trigger modal -->
+<button type="button" class="btn btn-success btn-lg btn-block" data-toggle="modal" data-target="#exampleModalCenter">
+  Download Results as Excel Sheet
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(document).ready(function () {
+$('#dtHorizontalVerticalExample').DataTable({
+"scrollX": true,
+"scrollY": 200,
+});
+$('.dataTables_length').addClass('bs-select');
+});
+</script>
+
+<style>
+  
+table tr:nth-child(even) {
+  /*background-color: rgba(87, 87, 87, 0.794);*/
+  
+}
+
+
+
+.container tr:hover {
+   background-color: #464A52;
+-webkit-box-shadow: 0 6px 6px -6px #0E1119;
+	   -moz-box-shadow: 0 6px 6px -6px #0E1119;
+	        box-shadow: 0 6px 6px -6px #0E1119;
+}
+
+.container tr:hover {
+   background-color: #464A52;
+-webkit-box-shadow: 0 6px 6px -6px #0E1119;
+	   -moz-box-shadow: 0 6px 6px -6px #0E1119;
+	        box-shadow: 0 6px 6px -6px #0E1119;
+}
+
+.container td:hover {
+  background-color: rgb(248, 248, 248);
+  color: rgb(46, 194, 125);
+  font-weight: bold;
+  
+  box-shadow: #7F7C21 -1px 1px, #7F7C21 -2px 2px, #7F7C21 -3px 3px, #7F7C21 -4px 4px, #7F7C21 -5px 5px, #7F7C21 -6px 6px;
+  transform: translate3d(4px, -4px, 0);
+  
+  transition-delay: 0s;
+	  transition-duration: 0.4s;
+	  transition-property: all;
+  transition-timing-function: line;
+  
+}
+
+
+
+    </style>
+
+{% endblock content %}
+
