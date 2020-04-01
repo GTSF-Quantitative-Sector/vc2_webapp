@@ -2,13 +2,74 @@
 {% block content %}
 
 
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+  <strong>Success!</strong> This table only displays up to 5 scores, but you can download the full results below.
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
 
-  <div class="col-lg-8">
-      {{ data.to_html(classes="table table-dark") | safe}}  
+  <table id ="dtHorizontalVerticalExample">
+            <!-- Insert other columns here-->           
+            {{ data.to_html(classes="table table-dark") | safe}}  
+  </table>
+   
+
+
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="card border-success">
+        <div class="card-header"><strong>Download Full Results</strong> </div>
+        <div class="card-body">
+          <h5 class="card-title">Select full table or just VC2 Scores</h5>
+          <p class="card-text">All results are sorted by VC2 score and availble as Excel Spreadsheets (.xlsx)</p>
+          <div class="btn-group btn-block">
+            <button type="button" class="btn btn-success btn-block dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <strong>Download</strong>
+            </button>
+            <div class="dropdown-menu dropdown-menu-right">
+              <a class="dropdown-item" href="/download">Entire Table</a>
+              <a class="dropdown-item" href="/download_scores">Just VC2 Scores</a>
+            
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="card border-warning">
+        <div class="card-header">More information</div>
+        <div class="card-body">
+          <h5 class="card-title">To learn more about what the scores mean</h5>
+          <p class="card-text">Contact <strong>seb.hollister@gatech.edu</strong> for more info or to report any issues with the website. Check out the about page for more info.</p>
+          <a href="/about" class="btn btn-warning btn-block float-right">About</a>
+        </div>
+      </div>
+    </div>
   </div>
 
-    <style>
-    .container tr:hover {
+
+
+<script>
+  $(document).ready(function () {
+$('#dtHorizontalVerticalExample').DataTable({
+"scrollX": true,
+"scrollY": 200,
+});
+$('.dataTables_length').addClass('bs-select');
+});
+</script>
+
+<style>
+  
+table tr:nth-child(even) {
+  /*background-color: rgba(87, 87, 87, 0.794);*/
+  
+}
+
+
+
+.container tr:hover {
    background-color: #464A52;
 -webkit-box-shadow: 0 6px 6px -6px #0E1119;
 	   -moz-box-shadow: 0 6px 6px -6px #0E1119;
@@ -28,14 +89,18 @@
   font-weight: bold;
   
   box-shadow: #7F7C21 -1px 1px, #7F7C21 -2px 2px, #7F7C21 -3px 3px, #7F7C21 -4px 4px, #7F7C21 -5px 5px, #7F7C21 -6px 6px;
-  transform: translate3d(6px, -6px, 0);
+  transform: translate3d(4px, -4px, 0);
   
   transition-delay: 0s;
 	  transition-duration: 0.4s;
 	  transition-property: all;
   transition-timing-function: line;
+  
 }
 
 
+
     </style>
+
 {% endblock content %}
+
