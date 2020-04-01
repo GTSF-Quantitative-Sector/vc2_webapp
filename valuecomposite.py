@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, make_response, request, flash, redirect
+from flask import Flask, render_template, send_file,url_for, make_response, request, flash, redirect
 from calc_vc2 import *
 from threading import Thread
 import concurrent.futures
@@ -16,7 +16,7 @@ import urllib.request
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'fook me'
-
+curr_excel_file = None
 
 @app.route("/")
 @app.route("/home")
@@ -36,6 +36,11 @@ def about():
     
 
     x = pd.DataFrame(np.random.randn(25, 8))
+    x.to_excel(r'static/vc2_results.xlsx')
+    cp_df = x.copy(deep=True)
+    
+    cp_df.drop(cp_df.columns.difference([7]), 1, inplace=True)
+    cp_df.to_excel(r'static/vc2_scores.xlsx')
     x = x.head(5)
     return render_template("about.html",  data=x)
 
@@ -43,6 +48,16 @@ def about():
 def yeet():
     time.sleep(5)
     return ("<h1> AJAX is zaddy </h1>")
+
+@app.route("/download")
+def downloadFile():
+    path = "static/vc2_results.xlsx"
+    return send_file(path, as_attachment=True)
+
+@app.route("/download_scores")
+def downloadScore():
+    path = "static/vc2_scores.xlsx"
+    return send_file(path, as_attachment=True)
 
 def color_negative_red(val):
     """
@@ -75,9 +90,13 @@ def calculate_table(stocks):
     replace_zero_mean(df)
     rank_ratio(df)
     result_df = rank_ticker(df)
-    return result_df
+    result_df.to_excel(r'static/vc2_results.xlsx')
+    cp_df = result_df.copy(deep=True)
+    cp_df.drop(cp_df.columns.difference(['VC2_Score']), 1, inplace=True)
+    cp_df.to_excel(r'static/vc2_scores.xlsx')
+    return result_df.head(5)
 
-ALLOWED_EXTENSIONS = set(['csv'])
+ALLOWED_EXTENSIONS = set(['csv', 'xlsx'])
 
 def allowed_file(filename):
 	return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
