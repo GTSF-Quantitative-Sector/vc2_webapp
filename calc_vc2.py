@@ -1,10 +1,12 @@
 """TODO: This file will connect with sources for data, and get the datasets"""
 
+from config import access_token
 import pandas as pd
 import requests
 import json
 import csv
 import itertools
+
 
 """with open('input/sample_list.csv', 'r') as file:
     reader = csv.reader(file)
@@ -24,16 +26,14 @@ req_attr = ["PS Ratio",
            ]
 
 def get_curr_price(ticker):
-    # response = requests.get("https://cloud.iexapis.com/stable/stock/{}/price?token=pk_06dd0bea7ba7428a96270972f47bdf23".format(ticker.upper()))
-    response = requests.get("https://sandbox.iexapis.com/stable/stock/{}/price?token=Tpk_81818462745e48e7821ce49f070f5816".format(ticker.upper()))
+    response = requests.get("https://sandbox.iexapis.com/stable/stock/{}/price?token={}".format(ticker.upper(), access_token))
     if response.status_code == 404:
         return "Stock Info not Available"
     result = response.json()
     return result
 
 def get_change_in_debt(ticker):
-    # response = requests.get("https://cloud.iexapis.com/stable/stock/{}/balance-sheet?period=annual&last=2&token=pk_06dd0bea7ba7428a96270972f47bdf23".format(ticker.upper()))
-    response = requests.get("https://sandbox.iexapis.com/stable/stock/{}/balance-sheet?period=annual&last=2&token=Tpk_81818462745e48e7821ce49f070f5816".format(ticker.upper()))
+    response = requests.get("https://sandbox.iexapis.com/stable/stock/{}/balance-sheet?period=annual&last=2&token={}".format(ticker.upper(), access_token))
     if response.status_code == 404:
         return "Stock Info not Available"
     comp_dc = response.json()
@@ -44,8 +44,7 @@ def get_change_in_debt(ticker):
     return debt_change
 
 def get_cash_flow(ticker):
-    # response = requests.get("https://cloud.iexapis.com/stable/stock/{}/cash-flow?token=pk_06dd0bea7ba7428a96270972f47bdf23".format(ticker.upper()))
-    response = requests.get("https://sandbox.iexapis.com/stable/stock/{}/cash-flow?token=Tpk_81818462745e48e7821ce49f070f5816".format(ticker.upper()))
+    response = requests.get("https://sandbox.iexapis.com/stable/stock/{}/cash-flow?token={}".format(ticker.upper(), access_token))
     if response.status_code == 404:
         return "Stock Info not Available"
     comp_cf = response.json()
@@ -53,8 +52,7 @@ def get_cash_flow(ticker):
     return cf
 
 def get_key_stats(ticker):
-    # response = requests.get("https://cloud.iexapis.com/stable/stock/{}/stats?token=pk_06dd0bea7ba7428a96270972f47bdf23".format(ticker.upper()))
-    response = requests.get("https://sandbox.iexapis.com/stable/stock/{}/stats?token=Tpk_81818462745e48e7821ce49f070f5816".format(ticker.upper()))
+    response = requests.get("https://sandbox.iexapis.com/stable/stock/{}/stats?token={}".format(ticker.upper(), access_token))
     if response.status_code == 404:
         return "Stock Info not Available"
     comp_dc = response.json()
@@ -71,8 +69,7 @@ def get_key_stats(ticker):
 
 
 def get_advanced_stats(ticker):
-    # response = requests.get("https://cloud.iexapis.com/stable/stock/{}/advanced-stats?token=pk_06dd0bea7ba7428a96270972f47bdf23".format(ticker.upper()))
-    response = requests.get("https://sandbox.iexapis.com/stable/stock/{}/advanced-stats?token=Tpk_81818462745e48e7821ce49f070f5816".format(ticker.upper()))
+    response = requests.get("https://sandbox.iexapis.com/stable/stock/{}/advanced-stats?token={}".format(ticker.upper(), access_token))
     if response.status_code == 404:
         return "Stock Info not Available"
     comp_adv_stats = response.json()
@@ -148,7 +145,8 @@ def rank_ticker(df):
     return result_df
 
 if __name__== "__main__" :
-    """import time
+    import time
+    stocks = ["GME", "AMC"]
     start_time = time.time()
     df = build_dataset(stocks)
     
@@ -161,4 +159,4 @@ if __name__== "__main__" :
     print(result_df)
     result_df.to_csv("result.csv")
     
-    print("Took {}".format(time.time() - start_time))"""
+    print("Took {}".format(time.time() - start_time))
